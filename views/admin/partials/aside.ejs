@@ -6,8 +6,8 @@
             </div>
             <div class="sidebar-profile-info">
                 <a href="javascript:void(0);" class="account-settings-link">
-                    <p><%= dataLogin.username %></p>
-                    <span><%= dataLogin.jenis_user %><i class="material-icons right">arrow_drop_down</i></span>
+                    <p><%= user.email %></p>
+                    <span><%= user.jenis_user %><i class="material-icons right">arrow_drop_down</i></span>
                 </a>
             </div>
         </div>
@@ -23,16 +23,20 @@
         </div>
     <ul class="sidebar-menu collapsible collapsible-accordion" data-collapsible="accordion">
         <li class="no-padding"><a class="waves-effect waves-grey" href="/admin/dashboard"><i class="material-icons">settings_input_svideo</i>Dashboard</a></li>
-        <% if(dataLogin.jenis_user == 'owner') {%>
         <li class="no-padding">
-            <a href="/admin/user" class="collapsible-header waves-effect waves-grey"><i class="material-icons">account_circle</i>Management User</a>
+            <a href="/admin/kota" class="collapsible-header waves-effect waves-grey"><i class="material-icons">account_circle</i>Management Kota</a>
         </li>
         <li class="no-padding">
-            <a href="/admin/menu" class="collapsible-header waves-effect waves-grey"><i class="material-icons">developer_board</i>Management Menu</a>
+            <a href="/admin/cabang" class="collapsible-header waves-effect waves-grey"><i class="material-icons">developer_board</i>Management Cabang</a>
         </li>
-        <% }  %>
         <li class="no-padding">
-            <a href="/admin/pemesanan" class="collapsible-header waves-effect waves-grey"><i class="material-icons">subtitles</i>Pemesanan</a>
+            <a href="/admin/rute" class="collapsible-header waves-effect waves-grey"><i class="material-icons">subtitles</i>Management Rute</a>
+        </li>
+        <li class="no-padding">
+            <a href="/admin/supir" class="collapsible-header waves-effect waves-grey"><i class="material-icons">subtitles</i>Management Supir</a>
+        </li>
+        <li class="no-padding">
+            <a href="/admin/jadwal" class="collapsible-header waves-effect waves-grey"><i class="material-icons">subtitles</i>Management Jadwal</a>
         </li>
     </ul>
     </div>

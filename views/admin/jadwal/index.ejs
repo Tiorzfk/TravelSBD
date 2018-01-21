@@ -1,0 +1,76 @@
+<% include ../partials/header %>
+
+<% include ../partials/aside %>
+<style media="screen">
+  table {
+    border: 0;
+  }
+</style>
+<main class="mn-inner">
+  <div class="row">
+      <div class="col s12 m12 l12">
+          <div class="card">
+              <div class="card-content">
+                  <span class="card-title">Management Kota</span>
+                  <a href="/admin/kota/add" class="waves-effect waves-light btn m-b-xs">Tambah</a>
+                  <table id="example" class="display responsive-table datatable-example">
+                      <thead>
+                          <tr>
+                              <th>ID</th>
+                              <th>Supir</th>
+                              <th>Rute</th>
+                              <th>Mobil</th>
+                              <th>Jam Keberangkatan</th>
+                              <th>Lama Perjalanan</th>
+                              <th>Kursi Tersedia</th>
+                              <th width="20%">Option</th>
+                          </tr>
+                      </thead>
+                      <tfoot>
+                          <tr>
+                              <th>ID</th>
+                              <th>Supir</th>
+                              <th>Rute</th>
+                              <th>Mobil</th>
+                              <th>Jam Keberangkatan</th>
+                              <th>Lama Perjalanan</th>
+                              <th>Kursi Tersedia</th>
+                              <th width="20%">Option</th>
+                          </tr>
+                      </tfoot>
+                      <tbody>
+                        <% data.forEach(function(data) { %>
+                          <tr>
+                              <td><%= data.id_jadwal %></td>
+                              <td><%= data.supir.nama %></td>
+                              <td><%= data.rute.cabangAsal.kotum.nama %> - <%= data.rute.cabangAsal.nama_cabang %> to <%= data.rute.cabangTujuan.kotum.nama %> - <%= data.rute.cabangTujuan.nama_cabang %></td>
+                              <td><%= data.mobil.no_polisi %></td>
+                              <td><%= data.jam_keberangkatan %></td>
+                              <td><%= data.lama_perjalanan %></td>
+                              <td><%= data.kursi_tersedia %></td>
+                              <td><a href="/admin/jadwal/edit/<%=data.id_jadwal%>" class="waves-effect waves-light btn m-b-xs"> Edit </a>
+                                <a onclick="return confirm('Apakah Anda Yakin ?')" href="/admin/jadwal/delete/<%=data.id_jadwal%>" class="waves-effect waves-light btn pink m-b-xs"> Hapus </a></td>
+                          </tr>
+                        <% }); %>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+</main>
+
+<% include ../partials/footer %>
+<script src="/backend/assets/plugins/google-code-prettify/prettify.js"></script>
+<script src="/backend/assets/js/pages/dialogs.js"></script>
+<script type="text/javascript">
+    var msg = '<%- message %>';
+    if(msg) {
+      Materialize.toast(msg, 5000);
+    }
+</script>
+<script src="/backend/assets/plugins/jquery/jquery-2.2.0.min.js"></script>
+<script src="/backend/assets/plugins/materialize/js/materialize.min.js"></script>
+<script src="/backend/assets/plugins/material-preloader/js/materialPreloader.min.js"></script>
+<script src="/backend/assets/plugins/datatables/js/jquery.dataTables.min.js"></script>
+<script src="/backend/assets/js/pages/table-data.js"></script>

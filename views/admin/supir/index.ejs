@@ -1,0 +1,70 @@
+<% include ../partials/header %>
+
+<% include ../partials/aside %>
+<style media="screen">
+  table {
+    border: 0;
+  }
+</style>
+<main class="mn-inner">
+  <div class="row">
+      <div class="col s12 m12 l12">
+          <div class="card">
+              <div class="card-content">
+                  <span class="card-title">Management Supir</span>
+                  <a href="/admin/supir/add" class="waves-effect waves-light btn m-b-xs">Tambah</a>
+                  <table id="example" class="display responsive-table datatable-example">
+                      <thead>
+                          <tr>
+                              <th>ID</th>
+                              <th>Nama</th>
+                              <th>Alamat</th>
+                              <th>No.Telp</th>
+                              <th>Foto</th>
+                              <th width="20%">Option</th>
+                          </tr>
+                      </thead>
+                      <tfoot>
+                          <tr>
+                              <th>ID</th>
+                              <th>Nama</th>
+                              <th>Alamat</th>
+                              <th>No.Telp</th>
+                              <th>Foto</th>
+                              <th width="20%">Option</th>
+                          </tr>
+                      </tfoot>
+                      <tbody>
+                        <% data.forEach(function(data) { %>
+                          <tr>
+                              <td><%= data.id_supir %></td>
+                              <td><%= data.nama %></td>
+                              <td><%= data.alamat %></td>
+                              <td><%= data.no_telp %></td>
+                              <td><%= data.foto %></td>
+                              <td><a href="/admin/supir/edit/<%=data.id_supir%>" class="waves-effect waves-light btn m-b-xs"> Edit </a>
+                                <a onclick="return confirm('Apakah Anda Yakin ?')" href="/admin/supir/delete/<%=data.id_supir%>" class="waves-effect waves-light btn pink m-b-xs"> Hapus </a></td>
+                          </tr>
+                        <% }); %>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+</main>
+
+<% include ../partials/footer %>
+<script src="/backend/assets/plugins/google-code-prettify/prettify.js"></script>
+<script src="/backend/assets/js/pages/dialogs.js"></script>
+<script type="text/javascript">
+    var msg = '<%- message %>';
+    if(msg) {
+      Materialize.toast(msg, 5000);
+    }
+</script>
+<script src="/backend/assets/plugins/jquery/jquery-2.2.0.min.js"></script>
+<script src="/backend/assets/plugins/materialize/js/materialize.min.js"></script>
+<script src="/backend/assets/plugins/material-preloader/js/materialPreloader.min.js"></script>
+<script src="/backend/assets/plugins/datatables/js/jquery.dataTables.min.js"></script>
+<script src="/backend/assets/js/pages/table-data.js"></script>
