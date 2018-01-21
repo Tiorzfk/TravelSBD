@@ -1,0 +1,46 @@
+<% include partials/header %>
+
+<% include partials/aside %>
+
+<main class="mn-inner">
+  <% if(dataLogin.jenis_user == 'owner') { %>
+    <div class="row">
+        <div class="col s12">
+            <div class="page-title">Laporan Penjualan</div>
+        </div>
+        <div class="col s12 m6 l6">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">Per-Bulan</span>
+                    <div>
+                        <canvas id="chart1" width="400" height="270"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m6 l6">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">Per-Minggu</span>
+                    <div>
+                        <canvas id="chart2" width="400" height="270"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% }else{ %>
+      <div class="row">
+        <div class="col s6 offset-s3">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title"><h5>Halaman Dashboard <%=dataLogin.jenis_user%><h5></span>
+                </div>
+            </div>
+        </div>
+      </div>
+    <% } %>
+</main>
+
+<% include partials/footer %>
+<script src="/backend/assets/js/pages/charts.js"></script>
