@@ -3,6 +3,7 @@
 <% include partials/aside %>
 
 <main class="mn-inner">
+  <% if(user.jenis_user == 'admin') { %>
     <div class="row">
         <div class="col s12">
             <div class="page-title">Laporan</div>
@@ -28,7 +29,83 @@
             </div>
         </div>
     </div>
+  <% }else{ %>
+    <div class="row">
+        <div class="col s12 m12 l12">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">Management Reservasi</span>
+                    <a href="/admin/reservasi/add" class="waves-effect waves-light btn m-b-xs">Tambah</a>
+                    <table id="example" class="display responsive-table datatable-example">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>User</th>
+                                <th>Jadwal</th>
+                                <th>Jumlah</th>
+                                <th>Status</th>
+                                <th width="20%">Option</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>ID</th>
+                                <th>User</th>
+                                <th width="20%">Jadwal</th>
+                                <th>Jumlah</th>
+                                <th>Status</th>
+                                <th width="20%">Option</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                          <% data.forEach(function(data) { %>
+                          <tr>
+                            <td><%= data.id_reservasi %></td>
+                            <td><%= data.user.nama %></td>
+                            <td><a class="waves-effect waves-light btn modal-trigger" id="detail" data-target="modal1" >Lihat Detail</a></td>
+                            <td><%= data.jumlah_reservasi %> orang</td>
+                            <td><% if(data.status == 0) { %> Belum Dibayar <% }else{ %> Sudah Dibayar <% } %></td>
+                            <td><a href="/admin/reservasi/edit/<%=data.id_reservasi%>" class="waves-effect waves-light btn m-b-xs"> Edit </a>
+                              <a onclick="return confirm('Apakah Anda Yakin ?')" href="/admin/reservasi/delete/<%=data.id_reservasi%>" class="waves-effect waves-light btn pink m-b-xs"> Hapus </a></td>
+                          </tr>
+                          <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <h4>Modal Header</h4>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat ">Agree</a>
+            <a href="#!" class="modal-action modal-close waves-effect waves-blue btn-flat ">Disagree</a>
+        </div>
+    </div>
+  <% } %>
 </main>
 
 <% include partials/footer %>
 <script src="/backend/assets/js/pages/charts.js"></script>
+<script src="/backend/assets/plugins/google-code-prettify/prettify.js"></script>
+<script src="/backend/assets/js/pages/dialogs.js"></script>
+<script type="text/javascript">
+    var msg = '<%- message %>';
+    if(msg) {
+      Materialize.toast(msg, 5000);
+    }
+</script>
+<script src="/backend/assets/plugins/jquery/jquery-2.2.0.min.js"></script>
+<script src="/backend/assets/plugins/materialize/js/materialize.min.js"></script>
+<script src="/backend/assets/plugins/material-preloader/js/materialPreloader.min.js"></script>
+<script src="/backend/assets/plugins/datatables/js/jquery.dataTables.min.js"></script>
+<script src="/backend/assets/js/pages/table-data.js"></script>
+<script src="/backend/assets/js/pages/ui-modals.js"></script>
+<script type="text/javascript">
+  $("#detail").click(function() {
+    $(".modal1").openModal();
+  });
+</script>

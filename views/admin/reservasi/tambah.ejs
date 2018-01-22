@@ -1,0 +1,153 @@
+<% include ../partials/header %>
+
+<% include ../partials/aside %>
+
+<main class="mn-inner">
+    <div class="row">
+        <div class="col s12">
+            <div class="page-title">Form Tambah Reservasi</div>
+        </div>
+        <div class="col s6 offset-s3">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">Input Reservasi</span><br>
+                    <div class="row">
+                        <form action="" method="post" class="col s12">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input type="text" name="tanggal_pesan" id="tanggal" class="datepicker">
+                                    <label for="tanggal">Tanggal Pesan</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input placeholder="Masukan Jumlah Reservasi" name="jumlah_reservasi" type="text">
+                                    <label for="first_name">Jumlah</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <select id="id_kota">
+                                        <option value="" readonly selected>Choose your option</option>
+                                        <% kota.forEach(function(data) { %>
+                                          <option value="<%=data.id_kota%>"><%=data.nama%></option>
+                                        <% }) %>
+                                    </select>
+                                    <label>Kota</label>
+                                </div>
+                                <div class="input-field col s6">
+                                    <select id="dari" class="browser-default">
+                                      <option value="" readonly selected>Dari</option>
+                                    </select>
+                                    <!-- <label for="dari">Dari</label> -->
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <select id="rute" class="browser-default">
+                                      <option value="" readonly selected>Rute</option>
+                                    </select>
+                                    <!-- <label>Rute</label> -->
+                                </div>
+                                <div class="input-field col s6">
+                                    <select id="jadwal" name="id_jadwal" class="browser-default">
+                                      <option value="" readonly selected>Jadwal</option>
+                                    </select>
+                                    <!-- <label>Jam Keberangkatan</label> -->
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <label>Jumlah Kursi Tersedia : <span id="kursi"></span> </label>
+                                </div>
+                            </div><br>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input class="waves-effect waves-light btn" type="submit" value="Simpan">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<% include ../partials/footer %>
+<script src="/backend/assets/plugins/google-code-prettify/prettify.js"></script>
+<script src="/backend/assets/js/pages/dialogs.js"></script>
+<script type="text/javascript">
+    var msg = '<%- message %>';
+
+    if(msg) {
+      Materialize.toast(msg, 5000);
+    }
+
+    $(document).ready(function() {
+
+    }).on('change','#id_kota', function() {
+        var id = $(this).val();
+        $.ajax({
+          url: `/api/reservasi/cabang/${id}`,
+          method: 'GET'
+        }).done(function(data) {
+          var dataOption = `<option value="" readonly selected>Dari</option>`;
+          data.result.forEach(function(d) {
+            dataOption += `<option value=${d.id_cabang}>${d.nama_cabang}</option>`
+          });
+          $("#dari").html(dataOption);
+        }).error(function(err) {
+          console.log(err);
+        });
+    }).on('change','#dari', function() {
+        var id = $(this).val();
+        $.ajax({
+          url: `/api/reservasi/rute/${id}`,
+          method: 'GET'
+        }).done(function(data) {
+          var dataOption = `<option value="" readonly selected>Rute</option>`;
+          data.result.forEach(function(d) {
+            dataOption += `<option value=${d.id_rute}>${d.cabangAsal.nama_cabang} - ${d.cabangTujuan.nama_cabang}</option>`
+          });
+          $("#rute").html(dataOption);
+        }).error(function(err) {
+          console.log(err);
+        });
+    }).on('change','#rute', function() {
+        var id = $(this).val();
+        $.ajax({
+          url: `/api/reservasi/jadwal/${id}`,
+          method: 'GET'
+        }).done(function(data) {
+          var dataOption = `<option value="" readonly selected>Jadwal</option>`;
+          data.result.forEach(function(d) {
+            dataOption += `<option value=${d.id_jadwal}>${d.jam_keberangkatan}</option>`
+          });
+          if(data.result.length == 0)
+            $("#jadwal").html('<option value="" readonly selected>Jadwal Kosong</option>');
+          else
+            $("#jadwal").html(dataOption);
+        }).error(function(err) {
+          console.log(err);
+        });
+    }).on('change','#jadwal', function() {
+        var id = $(this).val();
+        var tanggal = $("#tanggal").val();
+        console.log(tanggal);
+        console.log(id);
+        $.ajax({
+          url: `/api/reservasi//kursiTersedia/${id}/${tanggal}`,
+          method: 'GET'
+        }).done(function(data) {
+            if(data.result.jumlahKursi == null)
+              $("#kursi").html('Kosong');
+            else
+              $("#kursi").html(`${data.result.kursiTersedia} orang`);
+        }).error(function(err) {
+          console.log(err);
+        });
+    });
+
+
+</script>

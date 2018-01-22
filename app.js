@@ -14,6 +14,8 @@ var cabang = require('./routes/admin/cabang');
 var rute = require('./routes/admin/rute');
 var supir = require('./routes/admin/supir');
 var jadwal = require('./routes/admin/jadwal');
+var reservasi = require('./routes/admin/reservasi');
+var reservasiAPI = require('./routes/api/reservasi');
 var authAPI = require('./routes/api/auth')(passport);
 var databases = require("./config/db");
 
@@ -44,8 +46,10 @@ app.use('/admin/cabang', cabang);
 app.use('/admin/rute', rute);
 app.use('/admin/supir', supir);
 app.use('/admin/jadwal', jadwal);
+app.use('/admin/reservasi', reservasi);
 
 app.use('/api', authAPI);
+app.use('/api/reservasi', reservasiAPI);
 
 databases.mysql.sync({force: false}).then(() => {
   console.log('Database Ready');

@@ -22,6 +22,7 @@
             </ul>
         </div>
     <ul class="sidebar-menu collapsible collapsible-accordion" data-collapsible="accordion">
+      <% if(user.jenis_user == 'admin') {%>
         <li class="no-padding"><a class="waves-effect waves-grey" href="/admin/dashboard"><i class="material-icons">settings_input_svideo</i>Dashboard</a></li>
         <li class="no-padding">
             <a href="/admin/kota" class="collapsible-header waves-effect waves-grey"><i class="material-icons">account_circle</i>Management Kota</a>
@@ -38,6 +39,7 @@
         <li class="no-padding">
             <a href="/admin/jadwal" class="collapsible-header waves-effect waves-grey"><i class="material-icons">subtitles</i>Management Jadwal</a>
         </li>
+      <% } %>
     </ul>
     </div>
 </aside>

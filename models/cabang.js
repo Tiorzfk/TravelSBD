@@ -10,7 +10,7 @@ var cabangScheme = {
         autoIncrement: true
     },
     id_kota: {
-        type: Sequelize.STRING(15),
+        type: Sequelize.INTEGER(15),
         allowNull: false,
         validate : {
           notEmpty: {args:true,msg:'Nama Kota tidak boleh kosong.'}
