@@ -11,10 +11,6 @@ function isLoggedIn(req, res, next) {
 
 module.exports = function(passport) {
 
-  router.get('/', function(req, res, next) {
-    res.send('asd');
-  });
-
   router.get('/login', function(req, res, next) {
     res.render('admin/login', { message: req.flash('loginMessage')[0] });
   });

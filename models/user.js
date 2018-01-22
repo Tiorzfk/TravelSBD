@@ -23,10 +23,17 @@ var userScheme = {
         }
     },
     password: {
-        type: Sequelize.STRING(15),
+        type: Sequelize.TEXT,
         allowNull: false,
         validate : {
           notEmpty: {args:true,msg:'Password tidak boleh kosong.'}
+        }
+    },
+    no_telp: {
+        type: Sequelize.INTEGER(11),
+        allowNull: false,
+        validate : {
+          notEmpty: {args:true,msg:'No telepon tidak boleh kosong.'}
         }
     },
     jenis_user: {

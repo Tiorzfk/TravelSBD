@@ -14,6 +14,7 @@ var cabang = require('./routes/admin/cabang');
 var rute = require('./routes/admin/rute');
 var supir = require('./routes/admin/supir');
 var jadwal = require('./routes/admin/jadwal');
+var authAPI = require('./routes/api/auth')(passport);
 var databases = require("./config/db");
 
 var app = express();
@@ -43,6 +44,8 @@ app.use('/admin/cabang', cabang);
 app.use('/admin/rute', rute);
 app.use('/admin/supir', supir);
 app.use('/admin/jadwal', jadwal);
+
+app.use('/api', authAPI);
 
 databases.mysql.sync({force: false}).then(() => {
   console.log('Database Ready');
