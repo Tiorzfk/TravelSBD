@@ -82,7 +82,7 @@ router.get('/kursiTersedia/:id_jadwal/:tanggal', function(req, res, next) {
   });
 });
 
-module.exports.simpanReservasi = function(req,res) {
+router.post('/simpan', function(req, res, next) {
   req.body.id_user = req.user.id_user;
   req.body.status = '0';
   async.waterfall([
@@ -120,7 +120,6 @@ module.exports.simpanReservasi = function(req,res) {
         });
       }
   });
-
-}
+});
 
 module.exports = router;
