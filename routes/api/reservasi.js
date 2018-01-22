@@ -6,6 +6,7 @@ var Rute = require('../../models/rute');
 var Kota = require('../../models/kota');
 var Mobil = require('../../models/mobil');
 var Reservasi = require('../../models/reservasi');
+var User = require('../../models/user');
 var async = require('async');
 var sequelize = require('sequelize');
 
@@ -119,6 +120,35 @@ router.post('/simpan', function(req, res, next) {
           res.json({status:400,message:error,result:[]});
         });
       }
+  });
+});
+
+router.get('/user/:id_user', function(req, res, next) {
+  Reservasi.findAll(
+    {
+      where: {id_user:req.params.id_user},
+      include: [{
+        model : Jadwal,
+        include : [{
+          model : Rute,
+          include : [{
+            model : Cabang,
+            as : 'cabangAsal',
+            include : [Kota]
+          },{
+            model : Cabang,
+            as : 'cabangTujuan',
+            include : [Kota]
+          }]
+        }]
+      }, {
+        model : User
+      }]
+    }
+  ).then(user => {
+    res.json({status:200,message:'success',result:user});
+  }).catch(error => {
+    res.json({status:200,message:error,result:[]});
   });
 });
 
